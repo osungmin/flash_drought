@@ -8,7 +8,7 @@ import timeit
 from netCDF4 import Dataset
 print ("modules imported")
 
-def nc_stack(var, ref_yrs):
+def nc_stack(var, ref_yrs): 
     
    ###path to pentad soil moisture netcdfs
    ncpath="/your_path_to_soil_moisture_netcdfs/"
