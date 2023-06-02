@@ -18,3 +18,4 @@ These scripts are used in
 
 Flash drought drives rapid vegetation stress in arid regions in Europe, ERL, O and Park (2023)
 https://doi.org/10.1088/1748-9326/acae3a
+Divergent ecosystem response to flash drought across climate-vegetation regimes, in preparation, O and Park (2023)
