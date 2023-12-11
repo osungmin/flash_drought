@@ -12,9 +12,8 @@ under /main
 
 - main_drought.py: to detect drought events at each pixel (e.g. soil moisture decreases from 40th to 20th percentiles)
 - fd_detect.py: to select only FD (e.g. soil moisture 40th->20th percentile within n-pentads)
-- extract_vars.py: to extract meteo/eco variables during FD events
 
-The adapted scripts are used in 
+The scripts are used in 
 
 - Flash drought drives rapid vegetation stress in arid regions in Europe, ERL, O and Park (2023)
 https://doi.org/10.1088/1748-9326/acae3a
