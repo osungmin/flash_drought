@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# to compute soil moisture at a specific depth
+#to compute soil moisture at a specific depth
 
 #example: era5 soil moisture data 
 #swvl1: 0 - 7cm       
@@ -15,12 +15,12 @@
 #layer1: 0 - 10 cm
 #layer2: 10 - 30cm
 
-#target 2: 0 - 30cm : layer1 33.333% + layer2 66.667%
+#target 2: 0 - 30cm : layer1 33.33% + layer2 66.67%
 
-#
+## data path to soil moisture data
 data_path='/your_path_to_input_soilm_data/'
 
-#target depth
+## target depth (e.g. ERA5 soil moisture for 30 cm depth)
 layer='swvl30'
 
 if [ "$layer" == "swvl10" ]; then
@@ -59,9 +59,8 @@ if [ "$layer" == "layer30" ]; then
     c2=0.667
     var1="layer1"
     var2="layer2"
-fi
-
-if [ "$layer" == "layer50" ]; then
+    
+elif [ "$layer" == "layer50" ]; then
     c1=0.2
     c2=0.4
     c3=0.4
@@ -73,21 +72,23 @@ fi
 
 echo
 echo $layer $var1 scale factor $c1 and $var2 scale factor $c2 and $var3 scale factor $c3
-read $aa
+echo
 
 
 for yr in {2000..2019} ;
  do
 
-   ## prepare file names
+   ## input files (=soil moisture data)
    ifile1=${data_path}${var1}/${var1}.1440.720.pentad.${yr}.nc
    ifile2=${data_path}${var2}/${var2}.1440.720.pentad.${yr}.nc
    ifile3=${data_path}${var3}/${var3}.1440.720.pentad.${yr}.nc
 
+   ## output files (temporal)
    ofile1=${data_path}${var1}/${var1}.weighted.pentad.${yr}.nc
    ofile2=${data_path}${var2}/${var2}.weighted.pentad.${yr}.nc
    ofile3=${data_path}${var3}/${var3}.weighted.pentad.${yr}.nc
 
+   ## final output file (=depth-weighted soil moisture) 
    finalfile=${data_path}${layer}/${layer}.1440.720.pentad.${yr}.nc
 
    ## weighting soil moisure by depth
@@ -119,10 +120,11 @@ for yr in {2000..2019} ;
    cdo enssum ${ofile1} ${ofile2} ${ofile3} ${data_path}${layer}/imsi.1440.720.${yr}.nc
    #cdo enssum ${ofile1} ${ofile2} ${data_path}${layer}/imsi.1440.720.${yr}.nc
 
-   ## resulted file has a variable name of the first file; will change the variable name.
+   ## cdo output file has a variable name of the first file; will change the variable name.
    cdo chname,${var1},${layer} ${data_path}${layer}/imsi.1440.720.${yr}.nc ${finalfile}
    rm ${data_path}${layer}/imsi.1440.720.${yr}.nc
 
+   ## 
    rm ${ofile1}
    rm ${ofile2}
    rm ${ofile3}
